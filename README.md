@@ -15,7 +15,7 @@ REPLICATE_API_TOKEN=...
 Then run your app:
 
 ```console
-node app.js
+node functions/api.js
 ```
 
 ## How To Use
