@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>KTP Viewer with Tailwind</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body class="bg-gray-100 p-6 font-sans">
+    <div class="max-w-md mx-auto">
+      <div class="mb-4">
+        <label for="file" class="block text-sm font-medium text-gray-700 mb-1">
+          Upload KTP:
+        </label>
+
+        <input
+          type="file"
+          id="file"
+          accept="image/*"
+          class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring focus:border-blue-300 p-2 bg-white"
+        />
+      </div>
+
+      <div id="loader" class="flex justify-center invisible">
+        <img
+          src="https://www.nicepng.com/png/detail/12-127874_stock-loading-svg-circle-loading-png.png"
+          width="48px"
+          height="48px"
+          class="animate-spin"
+        />
+      </div>
+
+      <div
+        id="ktp"
+        class="hidden bg-blue-200 text-black border border-gray-700 rounded-lg p-5 shadow-lg relative"
+      >
+        <div id="ktp-table"></div>
+      </div>
+    </div>
+
+    <!-- <script>
+      document
+        .getElementById("file")
+        .addEventListener("change", function (evt) {
+          const file = evt.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            try {
+              const data = JSON.parse(e.target.result);
+              const table = document.getElementById("ktp-table");
+              table.innerHTML = `
+            <div class="text-center font-bold text-lg mb-4 leading-tight">
+                PROVINSI ${data.provinsi}<br />KABUPATEN ${data.kabupaten}
+            </div>
+
+            <table class="text-sm w-full" id="ktp-table">
+                <tr><td class="py-1 w-36">NIK</td><td>: ${data.nik}</td></tr>
+                <tr><td class="py-1">Nama</td><td>: ${data.nama}</td></tr>
+                <tr><td class="py-1">Tempat/Tgl Lahir</td><td>: ${data.tempat_lahir}, ${data.tanggal_lahir}</td></tr>
+                <tr><td class="py-1">Jenis Kelamin</td><td>: ${data.jenis_kelamin} &nbsp;&nbsp;&nbsp; Gol. Darah: ${data.gol_darah}</td></tr>
+                <tr><td class="py-1">Alamat</td><td>: ${data.alamat}</td></tr>
+                <tr><td class="py-1">RT/RW</td><td>: ${data.rt_rw}</td></tr>
+                <tr><td class="py-1">Kel/Desa</td><td>: ${data.kel_desa}</td></tr>
+                <tr><td class="py-1">Kecamatan</td><td>: ${data.kecamatan}</td></tr>
+                <tr><td class="py-1">Agama</td><td>: ${data.agama}</td></tr>
+                <tr><td class="py-1">Status Perkawinan</td><td>: ${data.status_perkawinan}</td></tr>
+                <tr><td class="py-1">Pekerjaan</td><td>: ${data.pekerjaan}</td></tr>
+                <tr><td class="py-1">Kewarganegaraan</td><td>: ${data.kewarganegaraan}</td></tr>
+                <tr><td class="py-1">Berlaku Hingga</td><td>: ${data.berlaku_hingga}</td></tr>
+            </table>
+          `;
+              document.getElementById("ktp").classList.remove("hidden");
+            } catch (err) {
+              alert("Invalid JSON format");
+            }
+          };
+          reader.readAsText(file);
+        });
+    </script> -->
+
+    <script>
+      document
+        .getElementById("file")
+        .addEventListener("change", function (evt) {
+          const file = evt.target.files[0];
+          if (!file) return;
+
+          console.log("Running...");
+          document.getElementById("loader").classList.remove("invisible");
+
+          try {
+            axios
+              .post(
+                "/extract",
+                {
+                  image: file,
+                },
+                {
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                    Accept: "application/json",
+                  },
+                }
+              )
+              .then((res) => {
+                const data = res.data;
+                const table = document.getElementById("ktp-table");
+                table.innerHTML = `
+              <div class="text-center font-bold text-lg mb-4 leading-tight">
+                  PROVINSI ${data.provinsi}<br />
+                  ${data.kabupaten}
+              </div>
+
+              <table class="text-sm w-full" id="ktp-table">
+                  <tr><td class="py-1 w-36">NIK</td><td>: ${data.nik}</td></tr>
+                  <tr><td class="py-1">Nama</td><td>: ${data.nama}</td></tr>
+                  <tr><td class="py-1">Tempat/Tgl Lahir</td><td>: ${
+                    data.tempat_tgl_lahir
+                  }</td></tr>
+                  <tr><td class="py-1">Jenis Kelamin</td><td>: ${
+                    data.jenis_kelamin
+                  } &nbsp;&nbsp;&nbsp; Gol. Darah: ${data.gol_darah}</td></tr>
+                  <tr><td class="py-1">Alamat</td><td>: ${data.alamat}</td></tr>
+                  <tr><td class="py-1">RT/RW</td><td>: ${data.rt_rw}</td></tr>
+                  <tr><td class="py-1">Kel/Desa</td><td>: ${
+                    data.kel_desa
+                  }</td></tr>
+                  <tr><td class="py-1">Kecamatan</td><td>: ${
+                    data.kecamatan
+                  }</td></tr>
+                  <tr><td class="py-1">Agama</td><td>: ${data.agama}</td></tr>
+                  <tr><td class="py-1">Status Perkawinan</td><td>: ${
+                    data.status_perkawinan
+                  }</td></tr>
+                  <tr><td class="py-1">Pekerjaan</td><td>: ${
+                    data.pekerjaan
+                  }</td></tr>
+                  <tr><td class="py-1">Kewarganegaraan</td><td>: ${
+                    data.kewarganegaraan
+                  }</td></tr>
+                  <tr><td class="py-1">Berlaku Hingga</td><td>: ${
+                    data.berlaku_hingga
+                  }</td></tr>
+              </table>
+            `;
+                document.getElementById("loader").classList.add("invisible");
+                document.getElementById("ktp").classList.remove("hidden");
+              });
+          } catch (error) {
+            console.log(error);
+          }
+        });
+    </script>
+  </body>
+</html>
