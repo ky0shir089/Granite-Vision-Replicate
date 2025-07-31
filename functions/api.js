@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 const router = express.Router()
-// const port = 3000;
+const port = 3000;
 
 const upload = multer({ dest: "uploads/" });
 
@@ -42,9 +42,9 @@ router.post("/extract", upload.single("image"), async (req, res) => {
   }
 });
 
-// app.listen(port, () => {
-//   console.log(`App listening on port ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
+});
 
 app.use('./netlify/functions/api', router);
 

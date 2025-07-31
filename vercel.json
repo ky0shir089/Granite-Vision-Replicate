@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "functions": [
+    {
+      "src": "functions/api.js",
+      "use": "@vercel/node"
+    }
+  ]
+}
