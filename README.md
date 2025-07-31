@@ -17,3 +17,7 @@ Then run your app:
 ```console
 node app.js
 ```
+
+## How To Use
+
+Just upload your KTP in the application and it will convert it content from image to text
