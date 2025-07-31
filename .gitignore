@@ -1,2 +1,4 @@
 .env
 .npmrc
+node_modules/
+.netlify

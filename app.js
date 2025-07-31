@@ -1,4 +1,5 @@
 import express from "express";
+import serverless from "serverless-http";
 import multer from "multer";
 import Replicate from "replicate";
 import dotenv from "dotenv";
@@ -43,3 +44,5 @@ app.post("/extract", upload.single("image"), async (req, res) => {
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
+
+export const handler = serverless(app);
