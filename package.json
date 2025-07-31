@@ -1,12 +1,13 @@
 {
-  "name": "my-replicate-app",
+  "name": "granite-vision-ocr",
   "version": "1.0.0",
   "private": true,
   "description": "A starter for testing out Replicate's API",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "netlify deploy --prod"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.11",

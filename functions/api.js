@@ -7,13 +7,14 @@ import { readFile } from "node:fs/promises";
 dotenv.config();
 
 const app = express();
-const port = 3000;
+const router = express.Router()
+// const port = 3000;
 
 const upload = multer({ dest: "uploads/" });
 
-app.use(express.static("public"));
+app.use(express.static("dist"));
 
-app.post("/extract", upload.single("image"), async (req, res) => {
+router.post("/extract", upload.single("image"), async (req, res) => {
   try {
     const replicate = new Replicate({
       auth: process.env.REPLICATE_API_TOKEN,
@@ -41,8 +42,10 @@ app.post("/extract", upload.single("image"), async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`App listening on port ${port}`);
+// });
+
+app.use('./netlify/functions/api', router);
 
 export const handler = serverless(app);
