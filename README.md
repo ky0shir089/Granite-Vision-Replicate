@@ -1,6 +1,6 @@
-# my-replicate-app
+# Granite Vision OCR KTP
 
-This is a scaffoled Node.js project structure for running AI models with [Replicate's API](https://replicate.com/docs/get-started/nodejs).
+This is a scaffoled Node.js project structure for running AI models with [Replicate's API](https://replicate.com/docs/get-started/nodejs) with Granite Vision.
 
 ## Usage
 
