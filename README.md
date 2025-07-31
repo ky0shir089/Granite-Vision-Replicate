@@ -9,11 +9,11 @@ To get started, you'll need Node.js 18 or later. The simplest way to install it 
 Next, grab a Replicate API token from [replicate.com/account](http://replicate.com/account) and set it as an environment variable:
 
 ```console
-export REPLICATE_API_TOKEN=...
+REPLICATE_API_TOKEN=...
 ```
 
 Then run your app:
 
 ```console
-npm start
+node app.js
 ```
