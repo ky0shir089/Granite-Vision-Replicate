@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/index.html",
+      "src": "functions/api.js",
       "use": "@vercel/static-build"
     }
   ]
